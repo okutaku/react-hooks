@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-
+//クラスコンポーネント
 class Counter extends Component {
   constructor(props) {
     super(props)

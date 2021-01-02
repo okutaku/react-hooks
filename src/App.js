@@ -1,5 +1,3 @@
-import React, { useReducer, createContext, useState }from 'react';
-import './App.css';
 // import Counter from './components/Counter';
 // import CounterHooks from './components/CounterHook';
 // import FormHook from './components/FormHook'
@@ -8,41 +6,56 @@ import './App.css';
 // import MouseEventEffect from './components/MouseEvent'
 // import ComponentC from './components/ComponentC'
 // import CounterReducer from './components/CounterReducer'
-import ComponentA from './components/ComponentA'
-import ComponentB from './components/ComponentB'
-import ComponentC from './components/ComponentC'
-
-export const CountContext = createContext()
+// import ComponentA from './components/ComponentA'
+// import ComponentB from './components/ComponentB'
+// import ComponentC from './components/ComponentC'
+import React, { useReducer, useEffect }from 'react';
+import './App.css';
+import axios from 'axios'
 
 const initialState = {
-  firstCounter: 0
+  loading: true,
+  error: '', 
+  post:{}
 }
 
 const reducer = (state, action) => {
-    switch (action.type) {
-      case 'increment1':
-        return {...state, firstCounter: state.firstCounter + action.value}
-      case 'decrement1':
-        return {...state, firstCounter: state.firstCounter - action.value}
-      case 'reset':
-        return initialState
-      default:
-        return state
+  switch(action.type) {
+    case 'FETCH_SUCCESS':
+      return{
+        loading: false,
+        post: action.payload,
+        error:''
+      }
+    case 'FETCH_ERROR':
+      return{
+        loading: false,
+        post:{},
+        error:'データの取得に失敗しました。'
+      }
+    default:
+      return state
   }
 }
 
+
 function App() {
-  const [count, dispatch] = useReducer(reducer, initialState)
-  //Contextを使用する場合でもProviderを使用するのは変わらない
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    axios
+      .get('https://jsonplaceholder.typicode.com/posts/1')
+      .then(res => {
+        dispatch({type: 'FETCH_SUCCESS', payload: res.data})
+      })
+      .catch(err => {
+        dispatch({type:'FETCH_ERROR'})
+      })
+  })
   return (
     <div className="App">
-      <h1>count:{count.firstCounter}</h1>
-      <CountContext.Provider
-        value={{ countState: count, countDispatch: dispatch}}>
-        <ComponentA />
-        <ComponentB />
-        <ComponentC />
-      </CountContext.Provider>
+      <h1>{state.loading ? 'Loading... ':state.post.title}</h1>
+      <h2>{state.error ? state.error: null}</h2>
     </div>
   );
 }

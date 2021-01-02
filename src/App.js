@@ -6,7 +6,8 @@ import './App.css';
 // import ItemHook from './components/ItemHook'
 // import EffectHooks from './components/EffectHook'
 // import MouseEventEffect from './components/MouseEvent'
-import ComponentC from './components/ComponentC'
+// import ComponentC from './components/ComponentC'
+import CounterReducer from './components/CounterReducer'
 
 export const UserContext = createContext()
 export const LanguageContext = createContext()
@@ -17,11 +18,7 @@ function App() {
   //Contextを使用する場合でもProviderを使用するのは変わらない
   return (
     <div className="App">
-      <UserContext.Provider value={user}>
-        <LanguageContext.Provider value={language}>
-          <ComponentC/> 
-        </LanguageContext.Provider>
-      </UserContext.Provider>
+      <CounterReducer />
     </div>
   );
 }

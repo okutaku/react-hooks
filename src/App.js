@@ -12,6 +12,7 @@
 import React, { useReducer, useEffect }from 'react';
 import './App.css';
 import axios from 'axios'
+//HTTPをリクエストするもの
 
 const initialState = {
   loading: true,
@@ -19,6 +20,7 @@ const initialState = {
   post:{}
 }
 
+//データが取得したときの処理できないときの処理
 const reducer = (state, action) => {
   switch(action.type) {
     case 'FETCH_SUCCESS':
@@ -45,12 +47,15 @@ function App() {
   useEffect(() => {
     axios
       .get('https://jsonplaceholder.typicode.com/posts/1')
+      //データを取得してくる
       .then(res => {
         dispatch({type: 'FETCH_SUCCESS', payload: res.data})
       })
+      //成功したときはthen
       .catch(err => {
         dispatch({type:'FETCH_ERROR'})
       })
+      //失敗したときはcatchに入ってくる
   })
   return (
     <div className="App">

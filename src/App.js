@@ -13,8 +13,6 @@ export const UserContext = createContext()
 export const LanguageContext = createContext()
 
 function App() {
-  const [user, setUser] = useState({name: 'yamada', age: '32'})
-  const [language, setLanguage] = useState('英語')
   //Contextを使用する場合でもProviderを使用するのは変わらない
   return (
     <div className="App">

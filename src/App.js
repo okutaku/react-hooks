@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import Check from './components/Check';
+import FocusInput from './components/Foucusinout';
 
 function App() {
   
   return (
     <div className="App">
-      <Check/>
+      <h1>useRef</h1>
+      <FocusInput/>
     </div>
   );
 }

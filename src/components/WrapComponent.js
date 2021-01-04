@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback} from 'react'
 import Count from './Count'
 import Button from './Button'
 import Title from './Title'
@@ -7,14 +7,15 @@ const WrapComponent = () => {
   const [age, setAge] = useState(30)
   const [score, setScore] = useState(100)
 
-  const incrementAge = () => {
+  const incrementAge = useCallback(() => {
     setAge(age + 1)
-  }
+  },[age])
 
-  const incrementScore = () => {
+  const incrementScore = useCallback(() => {
     setScore(score + 100)
-  }
-
+  },[score])
+  //処理とは異なる関数を異なる関数と認識して、レンダリングしてしまう。
+  //そのため、useCallbackを使い、何にフォーカスするべきかを教えてあげる
   return (
     <div>
       <Title />
